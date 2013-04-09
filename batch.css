@@ -1,0 +1,19 @@
+.selector-main{
+    width: 90%;
+    height: 30px;
+}
+.selector-text{
+    width: 16%;
+    float: left;
+}
+.selector-selector{
+    width: 82%;
+    float: right;
+}
+.table-container{
+    width: 90%;
+    overflow: scroll;    
+}
+table,th,td{
+    border:1px solid black;
+}
