@@ -144,7 +144,7 @@ if($batchnoselected != '' && $batchnoselected != 'selectbatch'){
             
             if($attendance_result['head']){
             $previous_attandance = $attendance_result['head'][0]->attendanceid;
-            $counter = 1;
+            $counter = 1;$total_counter = 1;
             foreach($attendance_result['head'] as $headr){                
                 if($previous_attandance == $headr->attendanceid){
                     echo "<th>";echo 'Days '.$counter;echo "</th>";
@@ -152,15 +152,14 @@ if($batchnoselected != '' && $batchnoselected != 'selectbatch'){
                     echo "<th>Total Attendance</th>";echo "<th>Attendance (%)</th>";$counter = 1;
                     echo "<th>";echo 'Days '.$counter;echo "</th>";
                     $previous_attandance = $headr->attendanceid;
-                    $counter++;
+                    //$counter++;
                     //continue;
-                }     
-                echo $counter;echo count($attendance_result['head']);
-                if($counter == count($attendance_result['head'])){
+                }
+                if($total_counter == count($attendance_result['head'])){
                     echo "<th>Total Attendance</th>";echo "<th>Attendance (%)</th>";$counter = 1;
                 }
                 $previous_attandance = $headr->attendanceid;
-                $counter++;
+                $counter++;$total_counter++;
             }
             }
         
@@ -196,10 +195,14 @@ if($batchnoselected != '' && $batchnoselected != 'selectbatch'){
                 if($attendance_result['head']){
                 $previous_attandance = $attendance_result['head'][0]->attendanceid;
                 $counter = 1;$user_attendance = 0;$is_user_assigned = 0;$total_counter = 1;
-                if(isset($attendance_result['content'][$user['id']])){
+                /*if(isset($attendance_result['content'][$user['id']])){
                     $is_user_assigned = 1;
-                }
-                foreach($attendance_result['head'] as $headr){                
+                }*/
+                foreach($attendance_result['head'] as $headr){
+                    $user_courses = get_all_users_course_assigned(array($user['id']));
+                    if(in_array($headr->course, $user_courses)){
+                        $is_user_assigned = 1;
+                    }
                     if($previous_attandance == $headr->attendanceid){
                         echo "<td>";
                         if($is_user_assigned){
@@ -221,7 +224,7 @@ if($batchnoselected != '' && $batchnoselected != 'selectbatch'){
                             }
                             echo "</td>";
                         }else{
-                            echo "<td></td>";echo "<td></td>";
+                            echo "<td></td>";echo "<td></td>";echo "<td></td>";
                             $user_attendance = 0;$counter = 1;
                         }
                         //continue;

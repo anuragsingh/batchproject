@@ -5,7 +5,7 @@ define('PREFIX','mdl_');
 $hostname = 'localhost';
 $username = 'root';
 $password = '';
-$databasename = 'testing';
+$databasename = 'testing1';
 
 $link = mysql_connect($hostname, $username, $password);
 if (!$link) {
