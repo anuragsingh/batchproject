@@ -135,3 +135,37 @@ ORDER BY mas.attendanceid ASC, mas.sessdate ASC";
     
     return $result_return;
 }
+
+function get_question_header_content($courses){
+    
+    $result_return = array();
+    
+    $result_return['head'] = array();
+      
+    if($courses) {
+    
+    $sql = "SELECT q.name,q.id
+FROM mdl_questionnaire AS q WHERE q.course IN ( ".implode(',',$courses)." )"; 
+    
+    $result = mysql_query($sql);
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {  
+     //   $result_return['head'][] = $row['id']; 	
+        $result_return['head'][$row['id']] = $row['name'];
+	}
+	return $result_return;
+}
+}
+
+function get_questions($questionnarieid){
+    $result_return = array();
+    $result_return['head'] = array();
+$sql="SELECT qq.id,qq.content FROM mdl_questionnaire 
+AS q INNER JOIN mdl_questionnaire_question AS qq INNER JOIN mdl_questionnaire_survey as qs
+ON qs.id=qq.survey_id AND qs.id=q.id WHERE q.course IN ( 5,6 ) AND q.id=$questionnarieid";
+$result = mysql_query($sql);
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {  
+       $result_return['head'][$row['id']] = $row['content'];        
+	}
+	return $result_return;
+}
+
